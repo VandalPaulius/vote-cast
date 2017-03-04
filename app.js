@@ -7,12 +7,16 @@ const router = new Router({
   prefix: '/api'
 })
 
-let musicPlayer = Omx()
+const musicPlayer = Omx()
+let streams = [];
 
 router.get('/', (ctx, next) => {
-  ctx.body = {
-    streams: []
-  }
+  ctx.body = streams
+})
+
+router.post('/', (ctx, next) => {
+  ctx.body = ''
+  console.log(ctx.request);
 })
 
 app
@@ -25,6 +29,8 @@ const exitHandler = () => {
   if (musicPlayer.running) {
     musicPlayer.quit()
   }
+
+  process.exit(0);
 }
 
 //Catch ctrl + c and exiting
