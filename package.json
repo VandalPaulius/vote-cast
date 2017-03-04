@@ -11,6 +11,7 @@
   "dependencies": {
     "dotenv": "^4.0.0",
     "koa": "^2.0.1",
+    "koa-bodyparser": "^4.1.0",
     "koa-router": "next",
     "node-omxplayer": "git://github.com/milasevicius/node-omxplayer.git#607c90ca9c0fb36b8715f6f2a84c5df9c39a06cd",
     "spotify-web-api-node": "^2.3.6"

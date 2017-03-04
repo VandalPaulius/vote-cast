@@ -1,5 +1,6 @@
 import Koa from 'koa'
 import Router from 'koa-router'
+import bodyParser from 'koa-bodyparser'
 import Omx from 'node-omxplayer'
 import spotifyApi from './spotifyApi'
 
@@ -17,11 +18,13 @@ router.get('/', (ctx, next) => {
 })
 
 router.post('/', (ctx, next) => {
-  ctx.body = ''
-  console.log(ctx.request);
+  const url = ctx.request.body.url
+
+  ctx.status = 201
 })
 
 app
+.use(bodyParser())
 .use(router.routes())
 .use(router.allowedMethods())
 
@@ -32,7 +35,7 @@ const exitHandler = () => {
     musicPlayer.quit()
   }
 
-  process.exit(0);
+  process.exit(0)
 }
 
 //Catch ctrl + c and exiting
