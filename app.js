@@ -1,23 +1,33 @@
-// Import the module.
-var Omx = require('node-omxplayer');
+import Koa from 'koa'
+import Router from 'koa-router'
+import Omx from 'node-omxplayer'
+import spotifyApi from './spotifyApi'
 
-// Create an instance of the player with the source.
-var player = Omx('http://159.8.16.16:7107/stream', 'alsa');
+const app = new Koa()
+const router = new Router({
+  prefix: '/api'
+})
 
-player.volUp();
-player.volUp();
-player.volUp();
-player.volUp();
-player.volUp();
-player.volUp();
-player.volUp();
-player.volUp();
-player.volUp();
-player.volUp();
+let musicPlayer = Omx()
 
-player.play();
+router.get('/', (ctx, next) => {
+  ctx.body = {
+    streams: []
+  }
+})
 
-setTimeout(function() {
-  player.quit();
-  console.log("quitted");
-}, 30000);
+app
+.use(router.routes())
+.use(router.allowedMethods())
+
+app.listen(3000)
+
+const exitHandler = () => {
+  if (musicPlayer.running) {
+    musicPlayer.quit()
+  }
+}
+
+//Catch ctrl + c and exiting
+process.on('SIGINT', exitHandler)
+process.on('exit', exitHandler);
