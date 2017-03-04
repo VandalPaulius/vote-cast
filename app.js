@@ -40,8 +40,4 @@ const exitHandler = () => {
 
 //Catch ctrl + c and exiting
 process.on('SIGINT', exitHandler)
-<<<<<<< HEAD
 process.on('exit', exitHandler)
-=======
-process.on('exit', exitHandler)
->>>>>>> c8df36a... omfg what?
