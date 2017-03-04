@@ -13,7 +13,9 @@ const router = new Router({
 const musicPlayer = Omx()
 
 musicPlayer.on('close', () => {
-  console.log("finished Q.Q")
+  streams.pop()
+
+  console.log('Song finished playing')
 });
 
 let streams = [];
