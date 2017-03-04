@@ -11,7 +11,13 @@ const router = new Router({
 })
 
 const musicPlayer = Omx()
+
+musicPlayer.on('close', () => {
+  console.log("finished Q.Q")
+});
+
 let streams = [];
+let isPaused = false;
 
 router.get('/', (ctx, next) => {
   ctx.body = streams
@@ -20,7 +26,23 @@ router.get('/', (ctx, next) => {
 router.post('/', (ctx, next) => {
   const url = ctx.request.body.url
 
+  streams.push(url)
+
   ctx.status = 201
+})
+
+router.post('/play', () => {
+  if (isPaused) {
+    musicPlayer.play()
+  } else {
+    musicPlayer.newSource(streams[0], 'alsa', false, 0)
+  }
+})
+
+router.post('/pause', () => {
+  isPaused = true;
+  
+  musicPlayer.pause()
 })
 
 app
