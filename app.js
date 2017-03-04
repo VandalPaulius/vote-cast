@@ -31,7 +31,7 @@ router.post('/streams', (ctx, next) => {
   ctx.status = 201
 })
 
-router.post('/play', () => {
+router.post('/play', (ctx, next) => {
   if (isPaused) {
     musicPlayer.play()
   } else {
@@ -41,7 +41,7 @@ router.post('/play', () => {
   ctx.status = 200
 })
 
-router.post('/pause', () => {
+router.post('/pause', (ctx, next) => {
   isPaused = true;
   
   musicPlayer.pause()
@@ -49,7 +49,7 @@ router.post('/pause', () => {
   ctx.status = 200
 })
 
-router.post('/stop', () => {
+router.post('/stop', (ctx, next) => {
   isPaused = false;
   
   musicPlayer.pause()
@@ -57,13 +57,13 @@ router.post('/stop', () => {
   ctx.status = 200
 })
 
-router.post('volume-up', () => {
+router.post('/volume-up', (ctx, next) => {
   musicPlayer.volUp()
 
   ctx.status = 200
 })
 
-router.post('volume-down', () => {
+router.post('/volume-down', (ctx, next) => {
   musicPlayer.volDown()
 
   ctx.status = 200
