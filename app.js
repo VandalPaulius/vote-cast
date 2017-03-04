@@ -19,11 +19,11 @@ musicPlayer.on('close', () => {
 let streams = [];
 let isPaused = false;
 
-router.get('/', (ctx, next) => {
+router.get('/streams', (ctx, next) => {
   ctx.body = streams
 })
 
-router.post('/', (ctx, next) => {
+router.post('/streams', (ctx, next) => {
   const url = ctx.request.body.url
 
   streams.push(url)
@@ -37,12 +37,36 @@ router.post('/play', () => {
   } else {
     musicPlayer.newSource(streams[0], 'alsa', false, 0)
   }
+
+  ctx.status = 200
 })
 
 router.post('/pause', () => {
   isPaused = true;
   
   musicPlayer.pause()
+
+  ctx.status = 200
+})
+
+router.post('/stop', () => {
+  isPaused = false;
+  
+  musicPlayer.pause()
+
+  ctx.status = 200
+})
+
+router.post('volume-up', () => {
+  musicPlayer.volUp()
+
+  ctx.status = 200
+})
+
+router.post('volume-down', () => {
+  musicPlayer.volDown()
+
+  ctx.status = 200
 })
 
 app
