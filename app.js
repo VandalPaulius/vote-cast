@@ -1,6 +1,7 @@
 import Koa from 'koa'
 import Router from 'koa-router'
 import Omx from 'node-omxplayer'
+import spotifyApi from './spotifyApi'
 
 const app = new Koa()
 const router = new Router({
