@@ -4,11 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "babel-node app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "koa": "^2.0.1",
+    "koa-router": "next",
     "node-omxplayer": "git://github.com/milasevicius/node-omxplayer.git#607c90ca9c0fb36b8715f6f2a84c5df9c39a06cd"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-preset-latest": "^6.22.0"
   }
 }
