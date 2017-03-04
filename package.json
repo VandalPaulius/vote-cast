@@ -1,0 +1,14 @@
+{
+  "name": "vote-cast",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-omxplayer": "git://github.com/milasevicius/node-omxplayer.git#607c90ca9c0fb36b8715f6f2a84c5df9c39a06cd"
+  }
+}
