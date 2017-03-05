@@ -27,7 +27,7 @@ router.get('/streams', (ctx, next) => {
 })
 
 router.post('/streams', (ctx, next) => {
-  const url = ctx.request.body.url
+  const url = unescape(ctx.request.body.url)
 
   if(url.indexOf('youtube') > -1) {
     youtubeApi.getStream(url).then(data => {
@@ -69,7 +69,7 @@ router.post('/play', (ctx, next) => {
   if (isPaused) {
     musicPlayer.play()
   } else {
-    musicPlayer.newSource(streams[0])
+    musicPlayer.newSource(streams[0].url)
   }
 
   ctx.status = 200
