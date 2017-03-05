@@ -42,7 +42,8 @@ router.post('/streams', (ctx, next) => {
   } else {
     streams.push({
       id: streams.length,
-      url: url
+      url: url,
+      vote: 0
     })
   }
 
