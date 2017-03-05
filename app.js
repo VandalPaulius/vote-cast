@@ -68,7 +68,7 @@ router.post('/play', (ctx, next) => {
   if (isPaused) {
     musicPlayer.play()
   } else {
-    musicPlayer.newSource(streams[0], 'alsa', false, 0)
+    musicPlayer.newSource(streams[0])
   }
 
   ctx.status = 200
