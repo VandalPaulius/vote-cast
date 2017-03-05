@@ -56,10 +56,10 @@ return proc;
             if (matches[1]) hours = Number(matches[1]);
             if (matches[2]) minutes = Number(matches[2]);
             if (matches[3]) seconds = Number(matches[3]);
-         //   totalseconds = hours * 3600  + minutes * 60 + seconds;
-         var time = hours.toString()+":" + minutes.toString() +":" + seconds.toString();
+           totalseconds = hours * 3600  + minutes * 60 + seconds;
+        // var time = hours.toString()+":" + minutes.toString() +":" + seconds.toString();
         }
 
-        return (time);
+        return (totalseconds);
     }
 //alert("Title: " + json.entry.title.$t +"\nDescription:\n " + json.entry.media$group.media$description.$t + "\n");
