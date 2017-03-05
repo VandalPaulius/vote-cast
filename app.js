@@ -2,7 +2,7 @@ import Koa from 'koa'
 import Router from 'koa-router'
 import bodyParser from 'koa-bodyparser'
 import Omx from 'node-omxplayer'
-// import spotifyApi from './spotifyApi'
+import spotifyApi from './spotifyApi'
 import youtubeApi from './youtubeApi'
 
 
@@ -32,6 +32,12 @@ router.post('/streams', (ctx, next) => {
   if(url.indexOf('youtube') > -1) {
     youtubeApi.getStream(url).then(data => {
       streams.push(Object.assign({}, {id: streams.length}, data))
+    })
+  } else if (url.indexOf('spotify') > -1) {
+    spotifyApi.getStreams(url).then(data => {
+      for(let i = 0; i < data.length; i++) {
+        streams.push(Object.assign({}, {id: streams.length}, data[i]))
+      }
     })
   } else {
     streams.push({
