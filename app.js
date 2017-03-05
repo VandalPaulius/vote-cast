@@ -2,7 +2,8 @@ import Koa from 'koa'
 import Router from 'koa-router'
 import bodyParser from 'koa-bodyparser'
 import Omx from 'node-omxplayer'
-import spotifyApi from './spotifyApi'
+// import spotifyApi from './spotifyApi'
+import youtubeApi from './youtubeApi'
 
 
 const app = new Koa()
@@ -22,15 +23,39 @@ let streams = [];
 let isPaused = false;
 
 router.get('/streams', (ctx, next) => {
-  ctx.body = streams
+  ctx.body = streams.sort((s1, s2) => s2.vote - s1.vote)
 })
 
 router.post('/streams', (ctx, next) => {
   const url = ctx.request.body.url
 
-  streams.push(url)
+  if(url.indexOf('youtube') > -1) {
+    youtubeApi.getStream(url).then(data => {
+      streams.push(Object.assign({}, {id: streams.length}, data))
+    })
+  } else {
+    streams.push({
+      id: streams.length,
+      url: url
+    })
+  }
 
   ctx.status = 201
+})
+
+router.post('/streams/:id/vote', (ctx, next) => {
+  const vote = ~~ctx.request.body.vote
+  const id = ~~ctx.params.id
+
+  streams = streams.map((stream) => {
+    if (stream.id == id) {
+      stream.vote += vote
+    }
+
+    return stream
+  })
+
+  ctx.status = 200
 })
 
 router.post('/play', (ctx, next) => {

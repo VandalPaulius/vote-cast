@@ -10,11 +10,18 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^4.0.0",
+    "ffmpeg": "0.0.4",
+    "fluent-ffmpeg": "^2.1.0",
+    "install": "^0.8.7",
     "koa": "^2.0.1",
     "koa-bodyparser": "^4.1.0",
     "koa-router": "next",
+    "node-fetch": "^1.6.3",
     "node-omxplayer": "git://github.com/milasevicius/node-omxplayer.git#607c90ca9c0fb36b8715f6f2a84c5df9c39a06cd",
-    "spotify-web-api-node": "^2.3.6"
+    "spotify-web-api-node": "^2.3.6",
+    "whatwg-fetch": "^2.0.3",
+    "ytdl": "^0.4.0",
+    "ytdl-core": "^0.9.2"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
