@@ -13,50 +13,54 @@ const api = new SpotifyWebApi({
 })
 
 const setAccessToken = () => {
-  api.clientCredentialsGrant()
+  return api.clientCredentialsGrant()
     .then(data => api.setAccessToken(data.body.access_token))
     .catch(err => console.error('Something went wrong when retrieving an access token', err))
 }
 
-export default {
+const spotifyApi = {
   getStreams (url) {
-    if (url.indexOf('playlist') > -1) {
-      let args = []
+    return setAccessToken().then(() => {
+      if (url.indexOf('playlist') > -1) {
+        let args = []
 
-      if (url.indexOf('open.spotify.com') > -1) {
-        let urlParts = url.split('/')
+        if (url.indexOf('open.spotify.com') > -1) {
+          let urlParts = url.split('/')
 
-        args.push(urlParts[4])
-        args.push(urlParts[6])
-      } else {
-        let urlParts = url.split(':')
+          args.push(urlParts[4])
+          args.push(urlParts[6])
+        } else {
+          let urlParts = url.split(':')
 
-        args.push(urlParts[2])
-        args.push(urlParts[4])
-      }
+          args.push(urlParts[2])
+          args.push(urlParts[4])
+        }
 
-      return api.getPlaylistTracks.apply(api, args).then(data => {
-        return api.getTracks(data.items.map(item => item.track.preview_url)).then(data => {
-          console.log(data)
-          return [data.body.preview_url]
+        return api.getPlaylistTracks.apply(api, args).then(data => {
+          return data.body.items.map(item => spotifyApi.transformTrack(item.track))
         })
-      })
-    } else {
-      let trackIds = []
-
-      if (url.indexOf('open.spotify.com') > -1) {
-        trackIds.push(url.split('/')[4])
       } else {
-        trackIds.push(url.split(':')[2])
-      }
+        let trackIds = []
 
-      console.log(trackIds)
-      return api.getTracks(trackIds)
-      .then(data => {
-        console.log("p", data)
-        return [data.body.preview_url]
-      })
-      .catch(err => console.error(err)).then(() => console.log('done'))
+        if (url.indexOf('open.spotify.com') > -1) {
+          trackIds.push(url.split('/')[4])
+        } else {
+          trackIds.push(url.split(':')[2])
+        }
+
+        return api.getTracks(trackIds).then(data => data.body.tracks.map(spotifyApi.transformTrack))
+      }
+    })
+  },
+
+  transformTrack (track) {
+    return {
+      url: track.preview_url,
+      title: track.name,
+      length: track.duration_ms / 60,
+      vote: 0,
     }
   }
 }
+
+export default spotifyApi

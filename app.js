@@ -45,7 +45,7 @@ router.post('/play', (ctx, next) => {
 
 router.post('/pause', (ctx, next) => {
   isPaused = true;
-  
+
   musicPlayer.pause()
 
   ctx.status = 200
@@ -53,7 +53,7 @@ router.post('/pause', (ctx, next) => {
 
 router.post('/stop', (ctx, next) => {
   isPaused = false;
-  
+
   musicPlayer.pause()
 
   ctx.status = 200
