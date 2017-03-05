@@ -10,10 +10,12 @@ function GetVideoId(url) {
         }
         return id;
 }
-//api_key =AIzaSyB2aa0BrSaCnumIRyXUnn8nVi0Jxeloac0
+//https://www.googleapis.com/youtube/v3/videos?id=GKSRyLdjsPA&key=AIzaSyDDh5IaSjuApU4Q4wWeauL1z6zuaeXyBg0&part=snippet,contentDetails,statistics,status
+//api_key =AIzaSyDDh5IaSjuApU4Q4wWeauL1z6zuaeXyBg0
+//https://developers.google.com/youtube/v3/docs/videos
 function getYouTubeData(url) {
          var id= GetVideoId(url);
-         url1 = "https://www.googleapis.com/youtube/v3/videos?id=" +'id'+ "&key=AIzaSyB2aa0BrSaCnumIRyXUnn8nVi0Jxeloac0";
+         url1 = "https://www.googleapis.com/youtube/v3/videos?id=" + id + "&key=AIzaSyDDh5IaSjuApU4Q4wWeauL1z6zuaeXyBg0" + "&part=snippet,contentDetails,statistics,status";
      //   $.getJSON(url,
   //  function(response){
     //    title = response.data.items[0].title;
@@ -41,5 +43,23 @@ function urlToStream(url){
     proc.setFfmpegPath('/Applications/ffmpeg')
 return proc;
 }
- 
+
+// youtube duration returns to iso8601 format
+//get  time: hour, min, sec.
+  function convertISO8601ToTime(input) {
+
+        var reptms = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/;
+        var hours = 0, minutes = 0, seconds = 0, totalseconds;
+
+        if (reptms.test(input)) {
+            var matches = reptms.exec(input);
+            if (matches[1]) hours = Number(matches[1]);
+            if (matches[2]) minutes = Number(matches[2]);
+            if (matches[3]) seconds = Number(matches[3]);
+         //   totalseconds = hours * 3600  + minutes * 60 + seconds;
+         var time = hours.toString()+":" + minutes.toString() +":" + seconds.toString();
+        }
+
+        return (time);
+    }
 //alert("Title: " + json.entry.title.$t +"\nDescription:\n " + json.entry.media$group.media$description.$t + "\n");
